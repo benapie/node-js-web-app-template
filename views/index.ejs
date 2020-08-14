@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+<% include partials/head.ejs %>
+<body>
+<div class="grid">
+    <header class="header"></header>
+
+    <% include partials/sidenav.ejs %>
+
+    <main class="main">
+        <div class="main-header">
+            <h1>
+                Title
+            </h1>
+        </div>
+
+        <div class="main-cards">
+            <div class="card">
+                <div class="card-header">
+                    Heading
+                    <hr>
+                </div>
+                <div class="card-main">
+                    Content
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <% include partials/footer.ejs %>
+</div>
+</body>
+</html>

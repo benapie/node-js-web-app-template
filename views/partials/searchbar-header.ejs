@@ -1,0 +1,70 @@
+<script type="text/javascript">
+    $(window).load(function () {
+        // Instantiate the Bloodhound suggestion engine
+        let data;
+        <% if (category === 'project') { %>
+        data = new Bloodhound({
+            datumTokenizer: function (datum) {
+                return Bloodhound.tokenizers.whitespace(datum.value);
+            },
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: window.location.origin + '/project/search?key=%QUERY',
+                filter: function (parsedResponse) {
+                    return parsedResponse;
+                }
+            }
+        });
+        <% } else if (category === 'customer') { %>
+        data = new Bloodhound({
+            datumTokenizer: function (datum) {
+                return Bloodhound.tokenizers.whitespace(datum.value);
+            },
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: window.location.origin + '/customer/search?key=%QUERY',
+                filter: function (parsedResponse) {
+                    return parsedResponse;
+                }
+            }
+        });
+        <% } else if (category === 'employee') { %>
+        data = new Bloodhound({
+            datumTokenizer: function (datum) {
+                return Bloodhound.tokenizers.whitespace(datum.value);
+            },
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: window.location.origin + '/employee/search?key=%QUERY',
+                filter: function (parsedResponse) {
+                    return parsedResponse;
+                }
+            }
+        });
+        <% } %>
+        // Initialize the Bloodhound suggestion engine
+        data.initialize();
+        // Instantiate the Typeahead UI
+        $('#header-searchbar').typeahead(null, {
+            displayKey: 'value',
+            source: data.ttAdapter(),
+            templates: {
+                suggestion: function (data) {
+                    return "<a href=" + data.id + ">" + data.value + "</a>"
+                }
+            }
+        }).on('typeahead:selected', function (e, datum) {
+            window.location.href = datum.id;
+        }).focus();
+    })
+</script>
+
+<header class="header">
+    <label for="header-searchbar"></label>
+    <input id="header-searchbar"
+           class="header-input"
+           name="query"
+           type="text"
+           required="required"
+           placeholder="Search..." autofocus>
+</header>
